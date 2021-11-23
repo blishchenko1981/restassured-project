@@ -1,9 +1,12 @@
 package com.cydeo.day6;
 
+import com.cydeo.pojo.Car;
 import com.cydeo.pojo.Job;
 import com.cydeo.utility.HrORDSTestBase;
 import io.restassured.path.json.JsonPath;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 import static io.restassured.RestAssured.*;
 
@@ -23,9 +26,20 @@ public class HRORDSTest extends HrORDSTestBase {
         System.out.println("j1 = " + j1);
 
         // save all result into List<Job>
-
-
+        List<Job> allJobs = jp.getList("items", Job.class);
+        System.out.println("allJobs = " + allJobs);
 
     }
 
+
+    @Test
+    public void testCarPOJO_Class(){
+
+        Car c1 = new Car("Accord", "Honda", 2012, false);
+        System.out.println("c1 = " + c1);
+
+        c1.setModel("Civic");
+        System.out.println("c1.getModel() = " + c1.getModel());
+
+    }
 }
