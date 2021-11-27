@@ -29,6 +29,12 @@ public class HRORDSTest extends HrORDSTestBase {
         List<Job> allJobs = jp.getList("items", Job.class);
         System.out.println("allJobs = " + allJobs);
 
+        // same steps with LOMBOK POJO
+        Job j2 = jp.getObject("items[0]", Job.class) ;
+        System.out.println("j2 = " + j2);
+
+        List<Job> allJobs2 = jp.getList("items", Job.class);
+        System.out.println("allJobs2 = " + allJobs2);
     }
 
 
