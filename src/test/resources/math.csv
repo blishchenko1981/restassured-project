@@ -1,0 +1,4 @@
+num1, num2, expectedResult
+2,     4,     6
+3,     6,     9
+125,  123,   248

@@ -1,14 +1,18 @@
 package com.cydeo.Day3;
 
+import com.cydeo.pojo.Job2;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static io.restassured.RestAssured.*;
 
@@ -32,7 +36,7 @@ public class HrOrdsTest {
                 .log().all()  // this will print everiting about your response
                 .when()
                 .get("/jobs");
-         response.prettyPrint();
+        response.prettyPrint();
 
         Assertions.assertEquals(200, response.getStatusCode());
         Assertions.assertEquals(ContentType.JSON.toString(), response.contentType());
@@ -52,7 +56,7 @@ public class HrOrdsTest {
     }
 
     @Test
-    public void testJobsWitQueryParam(){
+    public void testJobsWitQueryParam() {
 
         Response response = given()
                 .log().all()
@@ -60,7 +64,7 @@ public class HrOrdsTest {
                 .when().get("/jobs");
         response.prettyPrint();
 
-        Assertions.assertEquals(5, (int)response.path("count"));
+        Assertions.assertEquals(5, (int) response.path("count"));
 
         String lastJobID = response.path("items[-1].job_id");
         System.out.println("lastJobID = " + lastJobID);
@@ -68,7 +72,7 @@ public class HrOrdsTest {
     }
 
     @Test
-    public void testsingleJobWithPathParam(){
+    public void testsingleJobWithPathParam() {
 
         Response response = given().log().all().pathParam("job_id", "AD_VP").
                 when().get("/jobs/{job_id}");
@@ -76,9 +80,34 @@ public class HrOrdsTest {
         response.prettyPrint();
 
         String jobTitle = response.path("job_title");
-        Assertions.assertEquals("Administration Vice President",jobTitle );
+        Assertions.assertEquals("Administration Vice President", jobTitle);
 
 
     }
 
+    // ORDS API . AS A HOMEWORK :
+    // find out all Jobs name with min_salary more than 5000
+
+    @Test
+    public void homeWork() {
+       JsonPath jp =  given().
+                log().all().
+               queryParam("min_salary", 2500).
+                pathParam("all", "/jobs").
+                when().get("/{all}").jsonPath();
+
+        List<String> allMinSalaries = jp.getList("items.min_salary");
+        System.out.println("all min salaries" + allMinSalaries);
+
+        List<Job2> jobs = jp.getList("items", Job2.class);
+        for (Job2 job : jobs) {
+            if(job.getMinSalary() > 5000){
+
+                System.out.println("job = " + job);
+
+            }
+        }
+
+
+    }
 }
