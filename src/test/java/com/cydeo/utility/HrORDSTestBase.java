@@ -18,11 +18,14 @@ import static io.restassured.RestAssured.reset;
         public static void setup(){
             RestAssured.baseURI = "http://54.236.150.168:1000" ;
             RestAssured.basePath = "/ords/hr";
+            DB_Util.createConnection();
+
         }
 
         @AfterAll
         public static void teardown(){
             reset();
+            DB_Util.destroy();
         }
 
     }
