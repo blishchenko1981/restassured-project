@@ -14,6 +14,7 @@ public class MethodSourceListOfMap {
     @MethodSource("getAllStudentInfo")
     public void testStudentDDT(Map<String, Object> studentInfo){
         System.out.println("studentInfo = " + studentInfo);
+        System.out.println("studentInfo.get(\"name\") = " + studentInfo.get("name"));
     }
 
 
@@ -37,7 +38,7 @@ public class MethodSourceListOfMap {
         studentMap3.put("phone", 1200123321);
 
         Map<String,Object> studentMap4 =  new HashMap<>() ;
-        studentMap4.put("name", "Sophie") ;
+        studentMap4.put("name", "Irina") ;
         studentMap4.put("gender", "Female") ;
         studentMap4.put("phone", 332323323122L) ;
 
