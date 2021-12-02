@@ -53,6 +53,26 @@ public class DB_Util {    // declaring at class level so all methods can access
     }
 
 
+    public static void createLibraryDBConnection(){
+
+
+        String url      = ConfigReader.read("library2.database.url") ;
+        String username = ConfigReader.read("library2.database.username") ;
+        String password = ConfigReader.read("library2.database.password") ;
+//        try {
+//            con = DriverManager.getConnection(url , username, password) ;
+//            System.out.println("CONNECTION SUCCESSFUL");
+//        } catch (Exception e) {
+//            System.out.println("CONNECTION HAS FAILED " + e.getMessage() );
+//        }
+        createConnection(url, username, password);
+
+    }
+
+
+
+
+
     /**
      * Run the sql query provided and return ResultSet object
      * @param sql the query to run
