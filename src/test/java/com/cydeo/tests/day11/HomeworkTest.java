@@ -2,6 +2,7 @@ package com.cydeo.tests.day11;
 
 import com.github.javafaker.Faker;
 import com.sun.javaws.security.AppContextUtil;
+import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.path.xml.XmlPath;
 import org.junit.jupiter.api.*;
@@ -52,12 +53,32 @@ public class HomeworkTest {
     // http://www.omdbapi.com/?s=The Mandalorian&r=xml?apiKey=a3fabd87
 
     @Test
+    public void testMovie(){
+
+        RestAssured.baseURI = "http://www.omdbapi.com/";
+
+        Response response = given()
+                .queryParam("t", "The Mandalorian")
+                .queryParam("r", "xml").
+                queryParam("apiKey", "a3fabd87").
+                when().get("").prettyPeek();
+
+        XmlPath xml = response.xmlPath();
+
+
+
+    }
+
+
+    @Test
     public void MovieAPITest () {
 
         XmlPath xp = given().log().all()
                 .accept(ContentType.XML)
                 .queryParam("apikey", "a3fabd87")
-                .when().get("http://www.omdbapi.com/?s=The Mandalorian&r=xml").xmlPath().prettyPeek();
+                .queryParam("r", "xml")
+                .queryParam("s", "The Mandalorian")
+                .when().get("http://www.omdbapi.com/").xmlPath().prettyPeek();
 
         System.out.println("xp.getList(\"root.result.@year\") = " + xp.getList("root.result.@year"));
         System.out.println("xp.getList(\"root.result.@imbdID\") = " + xp.getList("root.result.@imdbID"));

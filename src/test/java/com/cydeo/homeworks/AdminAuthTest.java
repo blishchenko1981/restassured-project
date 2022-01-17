@@ -65,7 +65,7 @@ public class AdminAuthTest extends SpartanAPItestBase {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {22})
+    @ValueSource(ints = {25})
     public void testDelete(int param) {
 
         given()
@@ -75,7 +75,9 @@ public class AdminAuthTest extends SpartanAPItestBase {
                 .when().
                 delete("/spartans/{id}")
                 .then().log().all()
-                .statusCode(204);
+                .statusCode(204)
+                .header("Keep-Alive", "hi");
+
 
     }
 }

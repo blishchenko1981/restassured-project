@@ -68,4 +68,23 @@ public class SpartanMethodChainTest extends SpartanAPItestBase {
     }
 
 
+
+    @Test
+    public void testSearchPractice (){
+
+        given().log().uri()
+                .queryParam("nameContains", "Ea")
+                .queryParam("gender", "Male")
+                .when()
+                .get("/spartans/search").
+                then()
+                .log().all()
+                .statusCode(200)
+                .contentType(ContentType.JSON)
+                .body("totalElement", is(3))
+                .body("content", hasSize(3))
+                .body("content.name", hasItem("Sean"))
+                .body("content.id[1]", is(65))
+        ;
+    }
 }

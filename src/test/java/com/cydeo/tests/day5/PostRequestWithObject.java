@@ -43,6 +43,7 @@ public class PostRequestWithObject extends SpartanAPItestBase {
                 then()
                 .log().all()
                 .statusCode(201);
+        // using the Map
 
 
     }

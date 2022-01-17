@@ -128,11 +128,8 @@ public class SpartanPostPutPatchRequestTest extends SpartanAPItestBase {
         Response response = get("/spartans");
         int lastId =  response.path("id[-1]");
 given().log().all().pathParam("id", lastId).when().delete("spartans/{id}").then().statusCode(204);
-             // we can addintionlay send another request to this id and expect 404
+             // we can additionlay send another request to this id and expect 404
             // to make sure it actually worked
-
-
-
 
          }
 

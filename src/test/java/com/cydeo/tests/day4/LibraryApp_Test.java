@@ -54,7 +54,25 @@ public class LibraryApp_Test {
                 .then()
                 .log().all()
                 .statusCode(200);
+
+    given()
+            .header("Content type", "x-www-form-urlencoded")
+            .contentType(ContentType.URLENC)
+            .formParam("username", "Student")
+            .formParam("password", "Sdet22*")
+            .when()
+            .get("/login")
+            .then().log().all()
+            .statusCode(400);
+
+
     }
+
+
+
+
+
+
 
 // "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjp7ImlkIjoiMjgwIiwiZnVsbF9uYW1lIjoiVGVzdCBMaWJyYXJpYW4gNTIiLCJlbWFpbCI6ImxpYnJhcmlhbjUyQGxpYnJhcnkiLCJ1c2VyX2dyb3VwX2lkIjoiMiJ9LCJpYXQiOjE2MzczNDAxMTUsImV4cCI6MTYzOTkzMjExNX0.3Tl-NJt2uE8pXDtfCMw2TGXMbCc2sagYWEbtvOY0MXM",
 //    "redirect_uri": "//library2.cybertekschool.com/redirect.html?t=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjp7ImlkIjoiMjgwIiwiZnVsbF9uYW1lIjoiVGVzdCBMaWJyYXJpYW4gNTIiLCJlbWFpbCI6ImxpYnJhcmlhbjUyQGxpYnJhcnkiLCJ1c2VyX2dyb3VwX2lkIjoiMiJ9LCJpYXQiOjE2MzczNDAxMTUsImV4cCI6MTYzOTkzMjExNX0.3Tl-NJt2uE8pXDtfCMw2TGXMbCc2sagYWEbtvOY0MXM"
@@ -75,11 +93,17 @@ Response response =  given()
         .formParam("email","librarian52@library")
         .formParam("password", "Sdet2022*")
         .when()
-        .post("login");
+        .post("/login");
 
 String tokenFromRes = response.path("token");
-        System.out.println(tokenFromRes);
+        System.out.println("tokenFromRes = " + tokenFromRes);
 
-
+        given().
+                log().all()
+                .header("x-library-token", tokenFromRes)
+                .get("/dashboard_stats")
+                .then()
+                .log().all()
+                .statusCode(200);
     }
 }
