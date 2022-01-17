@@ -3,6 +3,8 @@ package com.cydeo.tests.day5;
 import com.cydeo.utility.SpartanAPItestBase;
 import com.cydeo.utility.SpartanUtil;
 import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.LinkedHashMap;
@@ -96,7 +98,22 @@ public class PostRequestWithObject extends SpartanAPItestBase {
                 .log().all()
                 .statusCode(204);
 
+       Response response =  given().log().all()
+                .pathParam("id", lastID)
+                .when().get("/spartans/{id}")
+                ;
+
+       Map<String,Object> result = response.body().as(Map.class);
+
+        System.out.println("result = " + result);
+        System.out.println("updateBodyMap = " + updateBodyMap);
+
+        Assertions.assertTrue(result.get("name").equals(updateBodyMap.get("name")));
+        Assertions.assertEquals(result.get("gender"), updateBodyMap.get("gender"));
+        Assertions.assertEquals(result.get("phone"), updateBodyMap.get("phone"));
+
     }
+
 
 
 
