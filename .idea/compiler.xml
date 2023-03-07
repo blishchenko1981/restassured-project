@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="restassured-project_vitalii" />
+        <module name="restassured-project" />
       </profile>
     </annotationProcessing>
   </component>

@@ -1,6 +1,7 @@
 package com.cydeo.tests.day5;
 
 import com.cydeo.pojo.Spartan;
+import io.restassured.RestAssured;
 import org.junit.jupiter.api.Test;
 import com.cydeo.utility.SpartanAPItestBase;
 
@@ -37,21 +38,46 @@ public class PostPutRequestWithPOJO extends SpartanAPItestBase{
     Spartan sp1 = new Spartan("Jim", "Male", 555000454544L);
     System.out.println("sp1 = " + sp1);
 
+            given()
+                       .log().all()
+                       .contentType(ContentType.JSON)
+                       .body(sp1).
+            when()
+                       .post("/spartans").
+            then()
+                       .log().all()
+                       .statusCode(201);
+}
+
+@Test
+    public void testPutWithPojo(){
+
+    //RestAssured.get("/spartans").prettyPeek().path("id[-1]");
+
+    Spartan spUpdate = new Spartan();
+    spUpdate.setName("Ivan");
+    spUpdate.setGender("Male");
+    spUpdate.setPhone(1234567891L);
+
+    int lastId =    RestAssured.get("/spartans").path("id[-1]");
+    System.out.println("lastId = " + lastId);
+
     given()
             .log().all()
+            .pathParam("id", lastId)
             .contentType(ContentType.JSON)
-            .body(sp1).
+                    .body(spUpdate).
+
             when()
-            .post("/spartans").
-            then().log().all().statusCode(201);
+            .put("/spartans/{id}").
 
-
-
+            then()
+            .log().all()
+            .statusCode(204);
 
 
 
 }
-
 
 
 }

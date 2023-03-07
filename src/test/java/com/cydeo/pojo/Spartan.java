@@ -2,18 +2,25 @@ package com.cydeo.pojo;
 
 public class Spartan {
 
-private String name;
-private String gender;
-private long phone;
+    private String name;
+    private String gender;
+    private long phone;
 
-    public String getGender() {
-        return gender;
+    public Spartan() {
+        //no body required
     }
+
 
     public Spartan(String name, String gender, long phone) {
         this.name = name;
         this.gender = gender;
         this.phone = phone;
+    }
+
+
+
+    public String getGender() {
+        return gender;
     }
 
     public void setGender(String gender) {
@@ -36,9 +43,6 @@ private long phone;
         this.name = name;
     }
 
-    public Spartan (){
-    //no body required
-}
 
     @Override
     public String toString() {
